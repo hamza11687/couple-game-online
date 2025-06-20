@@ -106,9 +106,7 @@
           alert("يرجى إدخال رقم الغرفة");
           return;
         }
-        ws = new WebSocket(
-          `wss://couple-game-online.onrender.com/ws/${roomId}`
-        );
+        ws = new WebSocket(`ws://localhost:8000/ws/${roomId}`);
 
         ws.onopen = () => {
           document.querySelector(".room").style.display = "none";
