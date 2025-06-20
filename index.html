@@ -1,67 +1,77 @@
 <!DOCTYPE html>
 <html lang="ar">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <title>🔥 احرجني لو تقدر - أونلاين 🇹🇳</title>
     <style>
-        body {
-            font-family: 'Cairo', sans-serif;
-            background: linear-gradient(-45deg, #ff758c, #ff7eb3, #ffc3a0, #ff9a9e);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+      body {
+        font-family: "Cairo", sans-serif;
+        background: linear-gradient(-45deg, #ff758c, #ff7eb3, #ffc3a0, #ff9a9e);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      @keyframes gradientBG {
+        0% {
+          background-position: 0% 50%;
         }
-        @keyframes gradientBG {
-            0% {background-position: 0% 50%;}
-            50% {background-position: 100% 50%;}
-            100% {background-position: 0% 50%;}
+        50% {
+          background-position: 100% 50%;
         }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            max-width: 500px;
-            width: 90%;
+        100% {
+          background-position: 0% 50%;
         }
-        h1 {
-            color: #ff4e50;
-        }
-        button {
-            padding: 15px 25px;
-            margin: 10px;
-            border: none;
-            border-radius: 50px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        button:active {
-            transform: scale(0.95);
-        }
-        .glow {
-            box-shadow: 0 0 20px 5px #4caf50 !important;
-            transition: 0.5s;
-        }
-        .room, .question, .challenge, .score, .current-player {
-            margin: 15px 0;
-            font-weight: bold;
-        }
+      }
+      .container {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        max-width: 500px;
+        width: 90%;
+      }
+      h1 {
+        color: #ff4e50;
+      }
+      button {
+        padding: 15px 25px;
+        margin: 10px;
+        border: none;
+        border-radius: 50px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+      button:active {
+        transform: scale(0.95);
+      }
+      .glow {
+        box-shadow: 0 0 20px 5px #4caf50 !important;
+        transition: 0.5s;
+      }
+      .room,
+      .question,
+      .challenge,
+      .score,
+      .current-player {
+        margin: 15px 0;
+        font-weight: bold;
+      }
     </style>
-</head>
-<body>
-<div class="container">
-    <h1>🔥 احرجني لو تقدر 🇹🇳</h1>
-    <div class="room">
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔥 احرجني لو تقدر 🇹🇳</h1>
+      <div class="room">
         أدخل رقم الغرفة: <input type="text" id="roomId" />
         <button onclick="connectWS()">دخول</button>
-    </div>
-    <div id="game" style="display:none">
+      </div>
+      <div id="game" style="display: none">
         <div class="current-player" id="currentPlayer">اللاعب 1 🎯</div>
         <div class="question" id="question">إضغط على سؤال جديد!</div>
         <button onclick="sendNewQuestion()">🎲 سؤال جديد</button>
@@ -69,69 +79,79 @@
         <button onclick="sendChallenge()">🎯 تحدي</button>
         <div class="challenge" id="challenge"></div>
         <div class="score" id="score">نقاط: 0</div>
+      </div>
     </div>
-</div>
-<script>
-let ws;
-let score = 0;
-const questions = [
-    "ما هو أكلك المفضل؟",
-    "هل سبق وكذبت علي؟",
-    "أكثر عادة تزعجك فيني؟",
-    "أكثر موقف محرج بيننا؟",
-    "لو تقدر تحذف موقف من علاقتنا، أي موقف؟",
-    "ما أكثر شيء تكرهه فيي؟",
-    "هل أعجبت يوماً بشخص غيري؟",
-    "أحرج شيء صار لك معنا؟"
-];
-const challenges = [
-    "غني أغنية حب 🎤",
-    "سيلفي مجنون 🤪",
-    "قل سر جديد لم تخبرني به من قبل 😳"
-];
+    <script>
+      let ws;
+      let score = 0;
+      const questions = [
+        "ما هو أكلك المفضل؟",
+        "هل سبق وكذبت علي؟",
+        "أكثر عادة تزعجك فيني؟",
+        "أكثر موقف محرج بيننا؟",
+        "لو تقدر تحذف موقف من علاقتنا، أي موقف؟",
+        "ما أكثر شيء تكرهه فيي؟",
+        "هل أعجبت يوماً بشخص غيري؟",
+        "أحرج شيء صار لك معنا؟",
+      ];
+      const challenges = [
+        "غني أغنية حب 🎤",
+        "سيلفي مجنون 🤪",
+        "قل سر جديد لم تخبرني به من قبل 😳",
+      ];
 
-function connectWS() {
-    const roomId = document.getElementById('roomId').value;
-    if(!roomId) {
-        alert('يرجى إدخال رقم الغرفة');
-        return;
-    }
-    ws = new WebSocket(`ws://localhost:8000/ws/${roomId}`);
-    ws.onopen = () => {
-        document.querySelector('.room').style.display = 'none';
-        document.getElementById('game').style.display = 'block';
-    };
-    ws.onmessage = (event) => { handleMessage(event.data); };
-    ws.onclose = () => alert('تم قطع الاتصال بالسيرفر');
-    ws.onerror = () => alert('حدث خطأ في الاتصال بالسيرفر');
-}
+      function connectWS() {
+        const roomId = document.getElementById("roomId").value;
+        if (!roomId) {
+          alert("يرجى إدخال رقم الغرفة");
+          return;
+        }
+        ws = new WebSocket(
+          `wss://couple-game-online.onrender.com/ws/${roomId}`
+        );
 
-function sendNewQuestion() {
-    const q = questions[Math.floor(Math.random()*questions.length)];
-    ws.send(JSON.stringify({type: 'question', text: q}));
-}
+        ws.onopen = () => {
+          document.querySelector(".room").style.display = "none";
+          document.getElementById("game").style.display = "block";
+        };
+        ws.onmessage = (event) => {
+          handleMessage(event.data);
+        };
+        ws.onclose = () => alert("تم قطع الاتصال بالسيرفر");
+        ws.onerror = () => alert("حدث خطأ في الاتصال بالسيرفر");
+      }
 
-function sendChallenge() {
-    const c = challenges[Math.floor(Math.random()*challenges.length)];
-    ws.send(JSON.stringify({type: 'challenge', text: c}));
-}
+      function sendNewQuestion() {
+        const q = questions[Math.floor(Math.random() * questions.length)];
+        ws.send(JSON.stringify({ type: "question", text: q }));
+      }
 
-function sendAddPoint() {
-    score++;
-    document.getElementById('score').innerText = `نقاط: ${score}`;
-    document.getElementById('score').classList.add('glow');
-    setTimeout(()=>document.getElementById('score').classList.remove('glow'), 500);
-    ws.send(JSON.stringify({type: 'score', score: score}));
-}
+      function sendChallenge() {
+        const c = challenges[Math.floor(Math.random() * challenges.length)];
+        ws.send(JSON.stringify({ type: "challenge", text: c }));
+      }
 
-function handleMessage(data) {
-    const msg = JSON.parse(data);
-    if (msg.type === 'question') document.getElementById('question').innerText = msg.text;
-    if (msg.type === 'challenge') document.getElementById('challenge').innerText = msg.text;
-    if (msg.type === 'score') {
-        document.getElementById('score').innerText = `نقاط: ${msg.score}`;
-    }
-}
-</script>
-</body>
+      function sendAddPoint() {
+        score++;
+        document.getElementById("score").innerText = `نقاط: ${score}`;
+        document.getElementById("score").classList.add("glow");
+        setTimeout(
+          () => document.getElementById("score").classList.remove("glow"),
+          500
+        );
+        ws.send(JSON.stringify({ type: "score", score: score }));
+      }
+
+      function handleMessage(data) {
+        const msg = JSON.parse(data);
+        if (msg.type === "question")
+          document.getElementById("question").innerText = msg.text;
+        if (msg.type === "challenge")
+          document.getElementById("challenge").innerText = msg.text;
+        if (msg.type === "score") {
+          document.getElementById("score").innerText = `نقاط: ${msg.score}`;
+        }
+      }
+    </script>
+  </body>
 </html>
