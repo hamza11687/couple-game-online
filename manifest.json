@@ -1,0 +1,22 @@
+{
+    "name": "لعبة الأزواج المحرجة 🔥",
+    "short_name": "أحرجني",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ff9a9e",
+    "theme_color": "#ff4e50",
+    "description": "لعبة أسئلة محرجة للأزواج - اصنع المرح والضحك مع شريكك!",
+    "icons": [
+      {
+        "src": "icon-192.png",
+        "sizes": "192x192",
+        "type": "bff.png"
+      },
+      {
+        "src": "icon-512.png",
+        "sizes": "512x512",
+        "type": "bff.png"
+      }
+    ]
+  }
+  
