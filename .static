@@ -1,0 +1,11 @@
+/game-project        <-- مجلد المشروع الرئيسي
+│
+├── server.py        <-- ملف السيرفر
+├── requirements.txt <-- ملف المتطلبات
+│
+└── static/          <-- هذا هو مجلد static المهم!
+     ├── index.html       <-- واجهة اللعبة
+     ├── manifest.json    <-- ملف PWA manifest
+     ├── service-worker.js <-- ملف الـ Service Worker
+     ├── bff-192.png     <-- الأيقونة 192x192
+     └── bff-512.png     <-- الأيقونة 512x512
